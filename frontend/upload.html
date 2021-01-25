@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VideoSite</title>
+  <style>
+    @font-face {
+      font-family: "Apple LiGothic";
+      src: url("../assets/fonts/LiGothicMed.eot");
+      src: url("../assets/fonts/LiGothicMed.eot?#iefix")
+      format("embedded-opentype"),
+      url("../assets/fonts/LiGothicMed.woff2") format("woff2"),
+      url("../assets/fonts/LiGothicMed.woff") format("woff"),
+      url("../assets/fonts/LiGothicMed.ttf") format("truetype"),
+      url("../assets/fonts/LiGothicMed.svg#LiGothicMed")
+      format("svg");
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    * {
+      font-size: 14px;
+      font-family: "Apple LiGothic";
+      margin: 0;
+    }
+
+    .site {
+      background-color: yellow;
+      color: black;
+      max-width: 100vw;
+      font-size: 2rem;
+      text-align: left;
+      padding: 1em 0 1em 1.5em;
+    }
+
+    .menu {
+      width: 100%;
+      background-color: lightgray;
+      font-size: 2rem;
+      margin: 0;
+      border-top: #000000 solid 0.1em;
+      border-bottom: #000000 solid 0.1em;
+    }
+
+    .menu ul {
+      display: flex;
+    }
+
+    ul a.link {
+      color: #ffffff;
+      background-color: #000000;
+      padding: 0.5em 2em;
+      border-radius: 0.5em;
+      margin: 1em;
+      list-style: none;
+      text-decoration: none;
+    }
+
+    ul a.link:first-child {
+      margin-inline-start: 0;
+    }
+
+    ul a.link:hover {
+      background-color: #333333;
+    }
+
+    .drop-zone {
+      border: 2px solid #ccc;
+      border-radius: 20px;
+      width: 480px;
+      height: 5em;
+      margin: 1em auto;
+    }
+
+    .drop-zone.highlight {
+      border-color: purple;
+    }
+
+    .drop-zone div {
+      width: fit-content;
+      height: fit-content;
+      margin: 2em auto;
+      text-align: center;
+    }
+
+    .my-form {
+      margin-bottom: 10px;
+    }
+
+    #gallery {
+      margin-top: 10px;
+    }
+
+    #gallery img {
+      width: 150px;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px;
+      background: #ccc;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .button:hover {
+      background: #ddd;
+    }
+
+    #fileElem {
+      display: none;
+    }
+
+    button.btn {
+      margin: 0 auto;
+      width: 480px;
+      height: 3em;
+      padding: 0.5em 1em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site">VideoSites</div>
+  <div class="menu">
+    <ul class="nav">
+      <ul class="nav">
+        <a class="link" href="home.html">
+          <li>Home</li>
+        </a>
+        <a class="link" href="upload.html">
+          <li>Upload</li>
+        </a>
+      </ul>
+    </ul>
+  </div>
+  <form
+  class="my-form"
+  >
+  <div id="drop-area" class="drop-zone">
+    <div>Drag and Drop</div>
+    <input
+    type="file"
+    id="fileElem"
+    name="filetoupload"
+    accept="video/*"
+    onchange="handleFiles(this.files)"
+    />
+  </div>
+  <div style="width: 100%; text-align: center">
+    <button class="btn" type="button" onclick="uploadFile(event)">Upload a File</button>
+  </div>
+</form>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
+<script>
+  let dropArea = document.getElementById("drop-area");
+
+  // Prevent default drag behaviors
+  ["dragenter", "dragover", "dragleave", "drop"].forEach(
+  (eventName) => {
+    dropArea.addEventListener(
+    eventName,
+    preventDefaults,
+    false
+    );
+    document.body.addEventListener(
+    eventName,
+    preventDefaults,
+    false
+    );
+  }
+  );
+
+
+
+  // Highlight drop area when item is dragged over it
+  ["dragenter", "dragover"].forEach((eventName) => {
+    dropArea.addEventListener(eventName, highlight, false);
+  });
+  ["dragleave", "drop"].forEach((eventName) => {
+    dropArea.addEventListener(eventName, unhighlight, false);
+  });
+
+  // Handle dropped files
+  dropArea.addEventListener("drop", handleDrop, false);
+
+  function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function highlight(e) {
+    dropArea.classList.add("highlight");
+  }
+
+  function unhighlight(e) {
+    dropArea.classList.remove("active");
+  }
+
+  function handleDrop(e) {
+    var dt = e.dataTransfer;
+    var files = dt.files;
+
+    handleFiles(files);
+  }
+
+  function handleFiles(file) {
+    console.log(file);
+    document.getElementById("fileElem").files = file;
+  }
+
+  function previewFile(file) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function () {
+      let img = document.createElement("img");
+      img.src = reader.result;
+      document.getElementById("gallery").appendChild(img);
+    };
+  }
+
+  function uploadFile(e) {
+    // define data and connections
+    e.preventDefault();
+    const fileElem = document.getElementById("fileElem").files;
+    const fileToUpload = fileElem['0']
+
+    var firebaseConfig = {
+      apiKey: "AIzaSyClEujtNJK-bhE4sAw0CkaBDIN7d0VK5Kw",
+      authDomain: "trying-66d27.firebaseapp.com",
+      databaseURL: "https://trying-66d27-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "trying-66d27",
+      storageBucket: "trying-66d27.appspot.com",
+      messagingSenderId: "304582395393",
+      appId: "1:304582395393:web:5423e774b62c93821a2200",
+      measurementId: "G-ZFGT8F4WEM"
+    };
+
+
+
+
+    firebase.initializeApp(firebaseConfig);
+    const ref = firebase.storage().ref();
+    const name = +new Date() + "-" + fileToUpload.name;
+    const metadata = {
+      contentType: fileToUpload.type
+    };
+    const task = ref.child(name).put(fileToUpload, metadata);
+    task
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(url => {
+      console.log(url);
+    })
+    .catch(console.error);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>VideoSite</title>
+        <style>
+            @font-face {
+                font-family: "Apple LiGothic";
+                src: url("../assets/fonts/LiGothicMed.eot");
+                src: url("../assets/fonts/LiGothicMed.eot?#iefix")
+                        format("embedded-opentype"),
+                    url("../assets/fonts/LiGothicMed.woff2") format("woff2"),
+                    url("../assets/fonts/LiGothicMed.woff") format("woff"),
+                    url("../assets/fonts/LiGothicMed.ttf") format("truetype"),
+                    url("../assets/fonts/LiGothicMed.svg#LiGothicMed")
+                        format("svg");
+                font-weight: 500;
+                font-style: normal;
+            }
+
+            * {
+                font-size: 14px;
+                font-family: "Apple LiGothic";
+                margin: 0;
+            }
+
+            .site {
+                background-color: #ffffff;
+                color: black;
+                max-width: 100vw;
+                font-size: 2rem;
+                text-align: left;
+                padding: 1em 0 1em 1.5em;
+            }
+
+            .menu {
+                width: 100%;
+                background-color: lightgray;
+                font-size: 2rem;
+                margin: 0;
+                border-top: #000000 solid 0.1em;
+                border-bottom: #000000 solid 0.1em;
+            }
+
+            .menu ul {
+                display: flex;
+            }
+
+            ul a.link {
+                color: #ffffff;
+                background-color: #000000;
+                border: 1px solid #cad;
+                padding: 0.5em 2em;
+                border-radius: 0.5em;
+                margin: 1em;
+                list-style: none;
+                text-decoration: none;
+            }
+
+            ul a.link:first-child {
+                margin-inline-start: 0;
+            }
+
+            ul a.link:hover {
+                background-color: #333333;
+            }
+
+            .videos {
+                margin: 0.5em 0.5em;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .video {
+                margin: 0.5em auto !important;
+                width: 360px;
+                height: auto;
+                border: black solid 0.1em;
+                padding: 0.5em;
+                margin: 0 auto;
+            }
+
+            .video img {
+                width: 100%;
+            }
+
+            .video-title {
+                font-size: 2em;
+                text-align: center;
+            }
+            video {
+                width: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="site">VideoSite</div>
+        <div class="menu">
+            <ul class="nav">
+                <a class="link" href="home.html">
+                    <li>Home</li>
+                </a>
+                <a class="link" href="upload.html">
+                    <li>Upload</li>
+                </a>
+            </ul>
+        </div>
+
+        <div class="videos">
+            <div class="video">
+                <video
+                    src="https://firebasestorage.googleapis.com/v0/b/trying-66d27.appspot.com/o/1611524412489-Funny%20Cat%20And%20mirror%20Video_Funny%20video_What's%20App%20Videos_30%20Seconds%20Status%20Video_.mp4?alt=media&token=c64652f7-a47f-4a03-8725-e7b8a5e86d00"
+                    alt="video-gorsel"
+                />
+                <h2 class="video-title">VideoTitle</h2>
+            </div>
+            <div class="video">
+                <img src="https://firebasestorage.googleapis.com/v0/b/trying-66d27.appspot.com/o/1611332212605-AntiguaArchTL.mp4?alt=media&token=628fb112-90dd-465d-ab55-e70cebbf4f2c" alt="video-gorsel" />
+                <h2 class="video-title">VideoTitle</h2>
+            </div>
+            <div class="video">
+                <img src="../assets/images/default.jpg" alt="video-gorsel" />
+                <h2 class="video-title">VideoTitle</h2>
+            </div>
+            <div class="video">
+                <img src="../assets/images/default.jpg" alt="video-gorsel" />
+                <h2 class="video-title">VideoTitle</h2>
+            </div>
+            <div class="video">
+                <img src="../assets/images/default.jpg" alt="video-gorsel" />
+                <h2 class="video-title">VideoTitle</h2>
+            </div>
+            <div class="video">
+                <img src="../assets/images/default.jpg" alt="video-gorsel" />
+                <h2 class="video-title">VideoTitle</h2>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

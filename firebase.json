@@ -1,0 +1,12 @@
+{
+  "database": {
+    "rules": "deneme.js"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.js"
+  },
+  "storage": {
+    "rules": "storage.js"
+  }
+}
